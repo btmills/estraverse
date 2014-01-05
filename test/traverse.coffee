@@ -268,3 +268,29 @@ describe 'function declaration', ->
             leave - FunctionDeclaration
         """
 
+describe 'spread element', ->
+    it 'traverse', ->
+        tree =
+            type: 'CallExpression'
+            callee: {
+                type: 'Identifier'
+                name: 'foo'
+            }
+            arguments: [{
+                type: 'SpreadElement'
+                argument: {
+                    type: 'Identifier'
+                    name: 'bar'
+                }
+            }]
+
+        expect(Dumper.dump(tree)).to.be.equal """
+            enter - CallExpression
+            enter - Identifier
+            leave - Identifier
+            enter - SpreadElement
+            enter - Identifier
+            leave - Identifier
+            leave - SpreadElement
+            leave - CallExpression
+        """
